@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-define :splunk_installer, url: nil do
+define :splunk_installer, url: nil, version: nil do
   cache_dir = Chef::Config[:file_cache_path]
   package_file = splunk_file(params[:url])
   cached_package = ::File.join(cache_dir, package_file)
@@ -58,7 +58,7 @@ define :splunk_installer, url: nil do
 
   declare_resource local_package_resource, params[:name] do
     source cached_package.gsub(/\.Z/, '')
-    version package_file[/#{params[:name]}-([^-]+)/, 1]
+    version params[:verson]
     options pkgopts.join(' ') if platform?('omnios')
   end
 end
