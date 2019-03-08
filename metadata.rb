@@ -12,7 +12,7 @@ supports 'redhat'
 supports 'centos'
 
 # for secrets management in setup_auth recipe
-depends 'chef-vault', '>= 1.0.4'
+#depends 'chef-vault', '>= 1.0.4'
 
 source_url 'https://github.com/chef-cookbooks/chef-splunk'
 issues_url 'https://github.com/chef-cookbooks/chef-splunk/issues'
