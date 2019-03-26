@@ -19,5 +19,4 @@
 
 splunk_installer 'splunkforwarder' do
   url node['splunk']['forwarder']['url']
-  version node['splunk']['forwarder']['version']
 end

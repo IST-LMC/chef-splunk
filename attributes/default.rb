@@ -25,6 +25,7 @@ default['splunk']['web_port']       = '443'
 default['splunk']['ratelimit_kilobytessec'] = '2048'
 
 default['splunk']['setup_auth'] = true
+default['splunk']['setup_service'] = true
 default['splunk']['user'] = {
   'username' => 'splunk',
   'comment' => 'Splunk Server',
@@ -77,7 +78,7 @@ default['splunk']['outputs_conf'] = {
 
 # Add a host name if you need inputs.conf file to be configured
 # Note: if host is empty the inputs.conf template will not be used.
-default['splunk']['inputs_conf']['host'] = ''
+default['splunk']['inputs_conf']['host'] = node['fqdn']
 default['splunk']['inputs_conf']['ports'] = []
 
 # If the `is_server` attribute is set (via an overridable location
