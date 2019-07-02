@@ -16,13 +16,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe 'chef-vault'
+#include_recipe 'chef-vault'
 
-splunk_auth_info = chef_vault_item(:vault, "splunk_#{node.chef_environment}")['auth']
-user, pw = splunk_auth_info.split(':')
+#splunk_auth_info = chef_vault_item(:vault, "splunk_#{node.chef_environment}")['auth']
+#user, pw = splunk_auth_info.split(':')
+user = 'admin'
+pw   = 'changeme'
+
+template '/opt/splunkforwarder/etc/system/local/user-seed.conf' do
+  source 'user-seed.conf.erb'
+  owner node['splunk']['user']['username']
+  group node['splunk']['user']['username']
+  mode   '0600'
+  variables(
+    :splunk_admin_username => user,
+    :splunk_admin_password => pw
+  )
+end
 
 execute 'change-admin-user-password-from-default' do
-  command "#{splunk_cmd} edit user #{user} -password '#{pw}' -role admin -auth admin:changeme"
+  command "#{splunk_cmd} edit user #{user} -password '#{pw}' -role admin -auth admin:changeme --accept-license"
   not_if { ::File.exist?("#{splunk_dir}/etc/.setup_#{user}_password") }
 end
 
